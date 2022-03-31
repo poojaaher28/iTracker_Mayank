@@ -154,8 +154,8 @@ export class AddslotsComponent {
     console.log("FORM DATA", this.formData.getRawValue());
    
     this.user = Object.assign(this.user, this.formData.value);
-    this.addslots.addUser(this.user);
-    localStorage.setItem('Users',JSON.stringify(this.user));
+   // this.addslots.addUser(this.user);
+    //localStorage.setItem('Users',JSON.stringify(this.user));
 
     this.addslots.saveUser(this.user)
     .subscribe
