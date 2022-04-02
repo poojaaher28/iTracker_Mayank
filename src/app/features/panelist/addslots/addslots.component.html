@@ -1,95 +1,94 @@
 
-<div class="h-100 d-flex align-items-center">
-  <form
-    class="container row-cols-sm-auto w-75"
-    [formGroup]="formData"
-    (ngSubmit)="onClickSubmit(formData.value)"
-  >
-    <div class="input-group flex-nowrap row gx-0">
-      <span class="col-4">Slot Date</span>
-      <input
-        class="form-control col"
-        placeholder="yyyy-mm-dd"
-        [(ngModel)]="slotDate"
-        (ngModelChange)="onSlotDateChange($event)"
-        formControlName="slotDate"
-        ngbDatepicker
-        #d="ngbDatepicker"
-        placement="right-top auto"
-      />
-      <button class="btn calendar" (click)="d.toggle()" type="button"></button>
-    </div>
-    <br />
-    <div class="input-group row gx-0 border-0">
-      <span class="col-4">From</span>
-      <select
-        class="form-select col-3"
-        aria-label="Select time slot"
-        formControlName="fromTimeSlot"
-      >
-        <option disabled selected>Select time slots</option>
-        <option *ngFor="let slot of Slots" [ngValue]="slot">
-          {{ slot }}
-        </option>
-      </select>
-      <span style="color: red; font-family: 'Times New Roman', Times, serif; font-size: small;" *ngIf="fromTimeSlot && fromTimeSlot.invalid && fromTimeSlot.touched">This field is reuired</span>
-    </div>
-    <br/>
-    <div class="input-group row gx-0 border-0">
-      <span class="col-4">To</span>
-      <select
-        class="form-select col-3"
-        aria-label="Select time slot"
-        formControlName="toTimeSlot"
-      >
-        <option disabled selected>Select time slots</option>
-        <option *ngFor="let slot of Slots" [ngValue]="slot">
-          {{ slot }}
-        </option>
-      </select>
-      <span style="color: red; font-family: 'Times New Roman', Times, serif; font-size: small;" *ngIf="toTimeSlot && toTimeSlot.invalid && toTimeSlot.touched">This field is reuired</span>
-
-    </div>
-    <br />
-    <div class="input-group row gx-0">
-      <span class="col-4">Repeat</span>
-      <select
-        class="form-select col"
-        formControlName="repeatMode"
-        (change)="onRepeatModeChange($event)"
-      >
-        <option value="never">never</option>
-        <option value="weekly">weekly</option>
-        <option value="daily">daily</option>
-      </select>
-
-    </div>
-    <br />
-    <div class="row p-4">
-      <div
-        class="list-group col-12 list-group-horizontal align-items-center justify-content-between"
-      >
-        <div
-          class="weekday list-group-item-primary rounded-circle list-group-item"
-          *ngFor="let item of DaysOfWeek | keyvalue: sortNull"
-          title="{{ item.key }}"
-          [ngClass]="
-            repeatMode !== 'never' &&
-            (repeatMode === 'daily' || selectDay === item.key)
-              ? 'active'
-              : ''
-          "
-        >
-          {{ item.value }}
+      <div class="card text-center mx-auto shadow border" style="width: 30rem;">
+        <div class="card-header">
+          <h5 style="font-weight: bold;">Pick your slot</h5>
+        </div>
+        <div class="card-body d-flex flex-column align-items-center">
+          <div class="h-100 d-flex align-items-center">
+            <form
+              class="container row-cols-sm-auto w-75"
+              [formGroup]="formData"
+              (ngSubmit)="onClickSubmit(formData.value)"
+            >
+              <div class="input-group flex-nowrap row gx-0">
+                <span class="col-4">Slot Date</span>
+                <input
+                  class="form-control col"
+                  placeholder="yyyy-mm-dd"
+                  [(ngModel)]="slotDate"
+                  (ngModelChange)="onSlotDateChange($event)"
+                  formControlName="slotDate"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                  placement="right-top auto"
+                />
+                <button class="btn calendar" (click)="d.toggle()" type="button"></button>
+              </div>
+              <br />
+              <div class="input-group row gx-0 border-0">
+                <span class="col-4">Time</span>
+                <select
+                  class="form-select col-3"
+                  aria-label="Select time slot"
+                  formControlName="fromTimeSlot"
+                >
+                  <option disabled selected>Select time slots</option>
+                  <option *ngFor="let slot of Slots" [ngValue]="slot">
+                    {{ slot }}
+                  </option>
+                </select>
+                <span style="color: red; font-size: small; font-weight: normal;" *ngIf="fromTimeSlot && fromTimeSlot.invalid && fromTimeSlot.touched">This field is reuired</span>
+              </div>
+              <br/>
+  
+              <div class="input-group row gx-0">
+                <span class="col-4">Repeat</span>
+                <select
+                  class="form-select col"
+                  formControlName="repeatMode"
+                  (change)="onRepeatModeChange($event)"
+                >
+                  <option value="never">never</option>
+                  <option value="weekly">weekly</option>
+                  <option value="daily">daily</option>
+                </select>
+          
+              </div>
+              <br />
+              <div class="row p-4">
+                <div
+                  class="list-group col-12 list-group-horizontal justify-content-center"
+                >
+                  <div
+                    class="weekday list-group-item-primary rounded-circle list-group-item"
+                    *ngFor="let item of DaysOfWeek | keyvalue: sortNull"
+                    title="{{ item.key }}"
+                    [ngClass]="
+                      repeatMode !== 'never' &&
+                      (repeatMode === 'daily' || selectDay === item.key)
+                        ? 'active'
+                        : ''
+                    "
+                  >
+                    {{ item.value }}
+                  </div>
+                </div>
+              </div>
+              <br />
+              
+                <button [disabled]="formData.invalid" type="submit" class="btn btn-outline-dark" style="font-weight: bold;">Add Slot</button>
+              
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <br />
-    <div class="row d-flex justify-content-end p-4">
-      <button [disabled]="formData.invalid" type="submit" class="btn btn-primary col-4">Add Slot</button>
-    </div>
-  </form>
-</div>
+     
+
+
+
+
+
+
 
 
 

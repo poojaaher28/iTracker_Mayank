@@ -1,3 +1,8 @@
+.card {
+  margin-top: 10%;
+  width: auto;
+}
+
 
 button.calendar,
 button.calendar:active {
@@ -37,7 +42,7 @@ input {
 span {
   font-size: 18px;
   font-weight: bold;
-  font-style: italic;
+  font-style: normal;
   display: inline-flex;
   align-items: center;
 }

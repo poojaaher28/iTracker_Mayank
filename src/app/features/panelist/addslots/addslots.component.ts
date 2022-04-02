@@ -1,3 +1,4 @@
+
 import { Component } from "@angular/core";
 import {
   NgbCalendar,
@@ -48,7 +49,8 @@ export class AddslotsComponent {
   };
   selectDay: string | null;
   formData!: FormGroup;
-  user: any  = {};
+  user: any = {};
+ 
 
   
   constructor(
@@ -76,7 +78,6 @@ export class AddslotsComponent {
     this.formData = this.fb.group({
       slotDate: [this.slotDate],
       fromTimeSlot: [null, [Validators.required]],
-      toTimeSlot: [null, [Validators.required]],
       repeatMode: [this.repeatMode, [Validators.required]]
     })
   }
@@ -85,16 +86,7 @@ export class AddslotsComponent {
     return this.formData.get('fromTimeSlot');
   }
 
-  get toTimeSlot(){
-    return this.formData.get('toTimeSlot');
-  }
 
- // onDateSelect(event){
-  //  let year = event.year;
-   // let month = event.month <= 9 ? '0' + event.month : event.month;;
-   // let day = event.day <=9 ? '0' + event.day : event.day;;
-   // let finalDate = year + "-" + month+ "-" + day;
- // }
 
 
 
@@ -137,12 +129,13 @@ export class AddslotsComponent {
     let weeknumber = (date.getDay() + 6 ) % 7;
     return days[weeknumber];
   }
-
   
   //sortNull for keeping original order of keyvalue in ngFor for DaysOfWeek
   sortNull() {
     return 0;
   }
+
+  
 
   onClickSubmit(data: any) {
     this.formData.setValue(data);
@@ -150,7 +143,7 @@ export class AddslotsComponent {
       "slotDate",
       new FormControl(this.formatDateToString(this.slotDate))
     );
-    console.log('TIME SLOTS RANGE ', this.timeCheck());
+    
     console.log("FORM DATA", this.formData.getRawValue());
    
     this.user = Object.assign(this.user, this.formData.value);
@@ -166,23 +159,8 @@ export class AddslotsComponent {
       }
     )
 
-    this.formData.reset();
-    
   }
   
-
-  //time slots validation
-  timeCheck(): string | null {
-    const [fromHr, fromMin] = this.formData.get('fromTimeSlot')?.value.split(":").map(Number);
-    const [toHr, toMin] = this.formData.get('toTimeSlot')?.value.split(":").map(Number);
-    
-    if (fromHr > toHr || (fromHr == toHr && fromMin > toMin)){
-      return 'INVALID';
-    } else {
-      return 'VALID';
-    }
-    return null;
-  } 
 }
 
 
