@@ -101,7 +101,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/rrule/dist/es5/rrule.min.js"
+              
+            ]
           }
         }
       }
